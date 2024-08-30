@@ -1,8 +1,8 @@
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'カルタゲーム - プレイ中',
-  description: 'カルタゲームをプレイ中',
+  title: 'コウメ合わせ - プレイ中',
+  description: 'コウメ合わせをプレイ中',
 }
 
 export default function GameLayout({
