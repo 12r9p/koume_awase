@@ -38,7 +38,7 @@ const Ranking: React.FC = () => {
     if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-indigo-100 to-white">
-                <div className="loader">読み込み中...</div>
+                <div className="loader"></div><div className='text-black mx-8'>読み込み中...</div>
             </div>
         );
     }
