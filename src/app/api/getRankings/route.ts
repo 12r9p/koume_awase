@@ -4,31 +4,36 @@ import axios from "axios";
 
 const NOTION_API_URL =
   "https://api.notion.com/v1/databases/9c87882a04734e9e8266315698f20291/query";
-const NOTION_API_KEY = process.env.NOTION_API_KEY; // Notion APIトークン
+const NOTION_API_KEY = process.env.NOTION_API_KEY;
 
 export async function POST() {
   try {
     const response = await axios.post(
       NOTION_API_URL,
-      {},
+      {
+        sorts: [
+          {
+            property: "Score",
+            direction: "descending",
+          },
+        ],
+        page_size: 10, // 上位10件のみを取得
+      },
       {
         headers: {
           Authorization: `Bearer ${NOTION_API_KEY}`,
           "Content-Type": "application/json",
-          "Notion-Version": "2022-06-28", // 最新のNotion APIバージョンに合わせてください
+          "Notion-Version": "2022-06-28",
         },
       }
     );
 
-    // Map and sort rankings by score in descending order
-    const rankings = response.data.results
-      .map((item: any) => ({
-        id: item.id,
-        name: item.properties.Name.title[0]?.text.content || "無名",
-        score: item.properties.Score.number,
-        kosen: item.properties.Kosen?.rich_text[0]?.text.content || "不明", // Kosenを追加
-      }))
-      .sort((a:any, b:any) => (b.score ?? 0) - (a.score ?? 0)); // スコアの降順でソート
+    const rankings = response.data.results.map((item: any) => ({
+      id: item.id,
+      name: item.properties.Name.title[0]?.text.content || "無名",
+      score: item.properties.Score.number,
+      kosen: item.properties.Kosen?.rich_text[0]?.text.content || "不明",
+    }));
 
     return NextResponse.json(rankings);
   } catch (error) {
