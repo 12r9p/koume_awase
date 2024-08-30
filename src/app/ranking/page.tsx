@@ -46,7 +46,7 @@ const Ranking: React.FC = () => {
     // ランキングデータを順位付けする関数
     const getRankedData = (data: any[]) => {
         let rank = 1;
-        let prevScore = null;
+        let prevScore :any = null;
         return data.map((item, index) => {
             if (prevScore !== item.score) {
                 rank = index + 1;
