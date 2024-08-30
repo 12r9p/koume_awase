@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import axios from "axios";
 
 const NOTION_API_URL =
-  "https://api.notion.com/v1/databases/9c87882a04734e9e8266315698f20291/query";
+  "https://api.notion.com/v1/databases/"+process.env.NOTION_DATABASE_ID+"/query";
 const NOTION_API_KEY = process.env.NOTION_API_KEY;
 
 export async function POST() {

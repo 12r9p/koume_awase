@@ -4,7 +4,7 @@ import axios from "axios";
 
 const NOTION_API_URL = "https://api.notion.com/v1/pages";
 const NOTION_API_KEY = process.env.NOTION_API_KEY; // Notion APIトークン
-const NOTION_DATABASE_ID = "9c87882a04734e9e8266315698f20291"; // NotionデータベースID
+const NOTION_DATABASE_ID = process.env.NOTION_DATABASE_ID; // NotionデータベースID
 
 export async function POST(req: Request) {
   try {
