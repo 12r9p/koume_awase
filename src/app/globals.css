@@ -31,3 +31,44 @@ body {
     text-wrap: balance;
   }
 }
+
+.bg-gold {
+    background-color: #FFD700; /* ゴールド */
+}
+
+.bg-silver {
+    background-color: #C0C0C0; /* シルバー */
+}
+
+.bg-bronze {
+    background-color: #CD7F32; /* ブロンズ */
+}
+
+/* styles/globals.css などに追加 */
+.text-shadow-gold {
+  text-shadow: 3px 3px 6px rgba(255, 215, 0, 0.8); /* ゴールドの影 */
+}
+
+.text-shadow-silver {
+  text-shadow: 3px 3px 6px rgba(192, 192, 192, 0.8); /* シルバーの影 */
+}
+
+.text-shadow-bronze {
+  text-shadow: 3px 3px 6px rgba(205, 127, 50, 0.8); /* ブロンズの影 */
+}
+
+/* Add this to your global CSS file or create a module.css file */
+
+.loader {
+    border: 8px solid #f3f3f3; /* Light grey */
+    border-top: 8px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

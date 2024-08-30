@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import axios from 'axios'; // Axiosを使ってAPIリクエストを送信
 
 // 句のデータを定義
 const originalKoumeData = [
@@ -11,7 +12,15 @@ const originalKoumeData = [
 const TOTAL_TIME = 18; // 各問題の制限時間（秒）
 const NUM_QUESTIONS = 5; // 選ばれる問題の数
 const NUM_CHOICES = 2; // 各問題の選択肢の数
-
+const highSchools = [
+  '茨城高専',
+  '群馬高専',
+  '木更津高専',
+  '小山高専',
+  '東京高専',
+  '産技高専',
+  '長岡高専'
+];
 
 const Game: React.FC = () => {
   const router = useRouter();
@@ -26,6 +35,9 @@ const Game: React.FC = () => {
   const [history, setHistory] = useState<{ question: string, answer: string, correct: boolean, timeSpent: number, correctAnswer?: string }[]>([]); // 回答履歴
   const [startTime, setStartTime] = useState(Date.now()); // 問題開始時刻
   const [isTransitioning, setIsTransitioning] = useState(false); // トランジション状態（多重クリック防止用）
+  const [playerName, setPlayerName] = useState(""); // プレイヤー名の状態
+  const [isSubmitting, setIsSubmitting] = useState(false); // 提出中フラグ
+  const [selectedSchool, setSelectedSchool] = useState(""); // 高専名の状態
 
   const audioRef = useRef<HTMLAudioElement>(null); // 音声ファイルの参照
 
@@ -152,6 +164,24 @@ const Game: React.FC = () => {
     </div>
   );
 
+  // スコアをNotionに保存する関数
+  const saveScore = async () => {
+    if (!playerName || !selectedSchool) return;
+
+    setIsSubmitting(true);
+
+    try {
+      await axios.post('/api/saveScore', { name: playerName, school: selectedSchool, score });
+      alert('スコアが保存されました！');
+    } catch (error) {
+      console.error('スコアの保存に失敗しました', error);
+      alert('スコアの保存に失敗しました');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+
   // ゲームオーバーの場合の表示
   if (gameOver) {
     return (
@@ -179,7 +209,32 @@ const Game: React.FC = () => {
               );
             })}
           </div>
-
+          <div className="my-8">
+            <input
+              type="text"
+              placeholder="プレイヤー名"
+              value={playerName}
+              onChange={(e) => setPlayerName(e.target.value)}
+              className="border border-gray-300 rounded-md p-2 mr-2"
+            />
+            <select
+              value={selectedSchool}
+              onChange={(e) => setSelectedSchool(e.target.value)}
+              className="border border-gray-300 rounded-md p-2 mr-2"
+            >
+              <option value="" disabled>高専名を選択</option>
+              {highSchools.map((school) => (
+                <option key={school} value={school}>{school}</option>
+              ))}
+            </select>
+            <button
+              onClick={saveScore}
+              disabled={isSubmitting}
+              className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full mt-2 transition duration-300 ease-in-out transform hover:scale-105"
+            >
+              スコアを保存する
+            </button>
+          </div>
           <button
             onClick={() => router.push('/')} // ホームに戻るボタン
             className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full mt-4 transition duration-300 ease-in-out transform hover:scale-105"

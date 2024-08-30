@@ -1,3 +1,4 @@
+// Home.tsx
 import React from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
@@ -20,6 +21,14 @@ const Home: React.FC = () => {
             ゲームを始める
           </button>
         </Link>
+
+        <div className="mt-8">
+          <Link href="/ranking" passHref>
+            <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full text-lg transition duration-300 ease-in-out transform hover:scale-105">
+              ランキングを見る
+            </button>
+          </Link>
+        </div>
 
         <div className="mt-12 bg-white p-7 rounded-lg shadow-md max-w-lg mx-auto">
           <h2 className="text-2xl font-semibold mb-4 text-indigo-800">ゲームルール</h2>
