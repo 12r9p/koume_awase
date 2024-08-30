@@ -179,6 +179,7 @@ const Game: React.FC = () => {
     } finally {
       setIsSubmitting(false);
     }
+    router.push('/')
   };
 
 
