@@ -48,7 +48,7 @@ export async function POST(req: Request) {
     );
 
     return NextResponse.json({ message: "Score saved successfully" });
-  } catch (error) {
+  } catch (error:any) {
     console.error("Error saving score:", error);
     return NextResponse.json(
       { message: "Error saving score", error: error.message },

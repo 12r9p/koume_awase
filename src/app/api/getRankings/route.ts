@@ -28,7 +28,7 @@ export async function POST() {
         score: item.properties.Score.number,
         kosen: item.properties.Kosen?.rich_text[0]?.text.content || "不明", // Kosenを追加
       }))
-      .sort((a, b) => (b.score ?? 0) - (a.score ?? 0)); // スコアの降順でソート
+      .sort((a:any, b:any) => (b.score ?? 0) - (a.score ?? 0)); // スコアの降順でソート
 
     return NextResponse.json(rankings);
   } catch (error) {
