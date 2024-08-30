@@ -20,6 +20,11 @@ const Home: React.FC = () => {
             ゲームを始める
           </button>
         </Link>
+        <Link href="/ranking" passHref>
+          <button className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full text-lg transition duration-300 ease-in-out transform hover:scale-105 ml-4">
+            ランキングを見る
+          </button>
+        </Link>
 
         <div className="mt-12 bg-white p-7 rounded-lg shadow-md max-w-lg mx-auto">
           <h2 className="text-2xl font-semibold mb-4 text-indigo-800">ゲームルール</h2>
@@ -35,8 +40,9 @@ const Home: React.FC = () => {
       </main>
 
       <footer className="mt-8 text-center text-gray-500">
-        <p>作成者：茨城高専ラジオ部　佐藤匠</p>
-        <p>MIDI音源作成：茨城高専デジタルアーツ　</p>
+        <p>ゲーム作成：茨城高専ラジオ　佐藤匠</p>
+        <p>問題データ作成：茨城高専ラジオ　蛭田泰誠</p>
+        <p>MIDI音源作成：茨城高専デジタルアーツ　鶴岡煌基</p>
       </footer>
     </div>
   );

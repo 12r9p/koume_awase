@@ -2,13 +2,14 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 // 句のデータを定義
 const originalKoumeData = [
   { upper: "英語を復習していたら", lower: "スイカがへし折ってました～。" }, { upper: "量子もつれに巻き込まれたと思ったら", lower: "かつてないほど横浜でした～。" }, { upper: "台風ですら進路が決まっているというのに！。かと思ったら", lower: "糸こんにゃく食べまくり社長でした～。" }, { upper: "人生やり直し機を買ったと思ったら", lower: "ちえっちえっこりちえっこりっさりっさっさっまんまんまさっさっまんまちえっちえっ でした～。" }, { upper: "泳がせ釣りに誘われたので行ってみたら", lower: "私は空の役でした～。" }, { upper: "慢心が1番の敵かと思っていたら", lower: "輪揚げ火事の元カンカンでした～。" }, { upper: "ドレスコ～ド無いクル～ズ旅ないかなあかと思ったら", lower: "払わないトンカツ叫ぶでした～。" }, { upper: "体調崩さないと健康の大切さに気付けないかと思ったら", lower: "まだ地球に居ないワンダフォ～の時でした～。" }, { upper: "ミニスカポリスがかがんだので見えちゃうかと思ったら", lower: "ミニスカポリスじろうでした～。" }, { upper: "リュウグウノツカイかと思ったら", lower: "あなたはリップクリ～ムでした～。" }, { upper: "グルメテーブルかけでかつ丼出したら", lower: "桃子ちょうちん脳みそに入れるでした～。" }, { upper: "ミドリムシに", lower: "麺に練りこまれました～。" }, { upper: "台風が来ないなあと思っていたら", lower: "いま私は火星でした～。" }, { upper: "明日は台風来るよ気をつけようね！。かと思っていたら", lower: "よく見たらオ～トミ～ルでした～。" }, { upper: "失敗は成功のもとかと思ったら", lower: "成功は失敗のもとに目覚めました～。" }, { upper: "東京ガーデンシアター埋めたと思ったら", lower: "次は幕張メッセ2Daysでした～。" }, { upper: "お安い御用かと思ったら", lower: "白だし・白だし・白だしでした～。" }, { upper: "パリオリンピックついに閉幕！。かと思っていたら", lower: "婚約指輪がワイファイ飛んでいてでした～。" }, { upper: "新しく来た蜘蛛は何処かに行ってしまい", lower: "前からいる蜘蛛が残りました" }, { upper: "アンキパンを食べてみたら", lower: "和洋折衷運ババ積極されました～。" }, { upper: "ソロキャンプを楽しんでいるかと思ったら", lower: "背後霊が10人憑いてました～。" }, { upper: "ラングドシャを焼いたと思ったら", lower: "ワンル～ム見ながら連絡しましたんだけど??まあそれはでした～。" }, { upper: "パリオリンピツクまだまだ熱狂！かと思ったら", lower: "１秒間にチクショウ５回言う練習するネズミチクチュウでした～。" }, { upper: "実は私も塗リキュアでした！。かと思ったら", lower: "私がスマホにトイレ落とされてました～。" }, { upper: "歴史に残る大暴落かと思っていたら", lower: "ラヴレタ～に水中メガネのタヌキを書いてました～。" }, { upper: "抽選ル～レットくるくるかと思っていたら", lower: "めんつゆでした～よく見たら。" }, { upper: "何やってもうまくいく人生の近くに引っ越ししたら", lower: "何やってもうまくいく人生が潰れました～。" }, { upper: "無課金チクショウおじさんかと思ったら", lower: "集めたヴェルマ～クを勝手に捨てられてました～。" }, { upper: "胸に手を当てて考えてみたら", lower: "春巻の演技でした～。" }
 ];
 
-const TOTAL_TIME = 18; // 各問題の制限時間（秒）
+const TOTAL_TIME = 19; // 各問題の制限時間（秒）
 const NUM_QUESTIONS = 5; // 選ばれる問題の数
 const NUM_CHOICES = 2; // 各問題の選択肢の数
 
@@ -26,6 +27,9 @@ const Game: React.FC = () => {
   const [history, setHistory] = useState<{ question: string, answer: string, correct: boolean, timeSpent: number, correctAnswer?: string }[]>([]); // 回答履歴
   const [startTime, setStartTime] = useState(Date.now()); // 問題開始時刻
   const [isTransitioning, setIsTransitioning] = useState(false); // トランジション状態（多重クリック防止用）
+  const [showRankingForm, setShowRankingForm] = useState(false);
+  const [playerName, setPlayerName] = useState('');
+  const [showRankingButton, setShowRankingButton] = useState(false);
 
   const audioRef = useRef<HTMLAudioElement>(null); // 音声ファイルの参照
 
@@ -152,6 +156,25 @@ const Game: React.FC = () => {
     </div>
   );
 
+  //送信処理
+  const submitScore = async () => {
+    try {
+      const response = await fetch('/api/notion', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: playerName, score }),
+      });
+      if (response.ok) {
+        setShowRankingForm(false);
+        setShowRankingButton(true);
+      } else {
+        console.error('Failed to submit score');
+      }
+    } catch (error) {
+      console.error('Error submitting score:', error);
+    }
+  };
+
   // ゲームオーバーの場合の表示
   if (gameOver) {
     return (
@@ -179,6 +202,41 @@ const Game: React.FC = () => {
               );
             })}
           </div>
+
+          {!showRankingForm && !showRankingButton && (
+            <button
+              onClick={() => setShowRankingForm(true)}
+              className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full mt-4 transition duration-300 ease-in-out transform hover:scale-105"
+            >
+              ランキングに保存する
+            </button>
+          )}
+
+          {showRankingForm && (
+            <div className="mt-4">
+              <input
+                type="text"
+                value={playerName}
+                onChange={(e) => setPlayerName(e.target.value)}
+                placeholder="プレイヤー名を入力"
+                className="border-2 border-gray-300 rounded-md px-4 py-2 mr-2"
+              />
+              <button
+                onClick={submitScore}
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:scale-105"
+              >
+                送信
+              </button>
+            </div>
+          )}
+
+          {showRankingButton && (
+            <Link href="/ranking" passHref>
+              <button className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full mt-4 transition duration-300 ease-in-out transform hover:scale-105">
+                ランキングを見る
+              </button>
+            </Link>
+          )}
 
           <button
             onClick={() => router.push('/')} // ホームに戻るボタン
