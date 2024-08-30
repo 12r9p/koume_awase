@@ -44,8 +44,9 @@ const Home: React.FC = () => {
       </main>
 
       <footer className="mt-8 text-center text-gray-500">
-        <p>作成者：茨城高専ラジオ部　佐藤匠</p>
-        <p>MIDI音源作成：茨城高専デジタルアーツ　</p>
+        <p>システム作成：茨城高専ラジオ　佐藤匠</p>
+        <p>問題データ作成：茨城高専ラジオ　蛭田泰誠</p>
+        <p>MIDI音源作成：茨城高専デジタルアーツ　鶴岡煌基</p>
       </footer>
     </div>
   );
