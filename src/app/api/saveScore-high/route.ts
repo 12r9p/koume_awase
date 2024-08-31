@@ -47,7 +47,7 @@ export async function POST(req: Request) {
       }
     );
 
-    console.log("Notion API response:", response.data);
+    //console.log("Notion API response:", response.data);
     return NextResponse.json({ message: "スコアが正常に保存されました" });
   } catch (error: any) {
     console.error(
