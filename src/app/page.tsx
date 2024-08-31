@@ -1,11 +1,24 @@
-import React from 'react';
+"use client";
+
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 import { Github } from 'lucide-react';
+import Switch from '@/components/ui/switch';
 
 const Home: React.FC = () => {
+  const [isHighDifficulty, setIsHighDifficulty] = useState(false);
+
+  const handleDifficultyToggle = () => {
+    setIsHighDifficulty(!isHighDifficulty);
+  };
+
+  const backgroundClass = isHighDifficulty
+    ? "bg-gradient-to-b from-red-200 to-red-100"
+    : "bg-gradient-to-b from-indigo-100 to-white";
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-indigo-100 to-white flex flex-col items-center justify-center p-4">
+    <div className={`min-h-screen ${backgroundClass} flex flex-col items-center justify-center p-4 transition-colors duration-300`}>
       <Head>
         <title>コウメ合わせ - ホーム</title>
         <meta name="description" content="コウメ太夫の世界観を当てよう！" />
@@ -16,14 +29,23 @@ const Home: React.FC = () => {
         <h1 className="text-4xl font-bold mb-6 text-indigo-800">コウメ合わせ</h1>
         <p className="mb-8 text-lg text-gray-700">コウメ太夫の世界観を当てよう！</p>
 
-        <Link href="/game" passHref>
+        <div className="flex items-center justify-center mb-6">
+          <span className="mr-2 text-black">難易度：</span>
+          <Switch
+            checked={isHighDifficulty}
+            onCheckedChange={handleDifficultyToggle}
+          />
+          <span className="ml-2 text-black">{isHighDifficulty ? '高' : '通常'}</span>
+        </div>
+
+        <Link href={isHighDifficulty ? "/high-difficult" : "/game"} passHref>
           <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full text-lg transition duration-300 ease-in-out transform hover:scale-105">
             ゲームを始める
           </button>
         </Link>
 
         <div className="mt-8">
-          <Link href="/ranking" passHref>
+          <Link href={isHighDifficulty ? "/ranking-high" : "/ranking"}passHref>
             <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full text-lg transition duration-300 ease-in-out transform hover:scale-105">
               ランキングを見る
             </button>
@@ -56,10 +78,9 @@ const Home: React.FC = () => {
         <p>システム作成：茨城高専ラジオ　佐藤匠</p>
         <p>問題データ作成：茨城高専ラジオ　蛭田泰誠</p>
         <p>MIDI音源作成：茨城高専デジタルアーツ　鶴岡煌基</p>
-        
       </footer>
     </div>
   );
 };
 
-export default Home;
+export default Home
