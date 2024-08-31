@@ -17,7 +17,7 @@ export async function POST() {
             direction: "descending",
           },
         ],
-        page_size: 10, // 上位10件のみを取得
+        page_size: 20, // 上位20件のみを取得
       },
       {
         headers: {

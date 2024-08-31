@@ -74,7 +74,7 @@ const Ranking: React.FC = () => {
                 <h2 className="text-2xl font-semibold mb-4 text-indigo-800">上位10位</h2>
                 <ul className="list-none">
                     {/* 上位10位のデータを表示 */}
-                    {rankedData.slice(0, 10).map((rank) => (
+                    {rankedData.slice(0, 20).map((rank) => (
                         <li
                             key={rank.id}
                             className={`mb-4 p-4 rounded-lg ${rank.rank === 1 ? 'bg-gold text-black text-shadow-gold' :
