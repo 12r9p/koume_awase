@@ -1,7 +1,7 @@
-// Home.tsx
 import React from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
+import { Github } from 'lucide-react';
 
 const Home: React.FC = () => {
   return (
@@ -44,9 +44,19 @@ const Home: React.FC = () => {
       </main>
 
       <footer className="mt-8 text-center text-gray-500">
+        <a
+          href="https://github.com/12r9p/koume_awase"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center mt-4 text-indigo-600 hover:text-indigo-800 transition-colors duration-200"
+        >
+          <Github size={24} className="mr-2" />
+          GitHubでソースコードを見る
+        </a>
         <p>システム作成：茨城高専ラジオ　佐藤匠</p>
         <p>問題データ作成：茨城高専ラジオ　蛭田泰誠</p>
         <p>MIDI音源作成：茨城高専デジタルアーツ　鶴岡煌基</p>
+        
       </footer>
     </div>
   );
