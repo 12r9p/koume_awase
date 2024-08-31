@@ -57,7 +57,7 @@ const Ranking: React.FC = () => {
 
             <h1 className="text-4xl font-bold mb-6 text-red-500 animate-pulse">高難易度モードランキング</h1>
             <div className="bg-gray-900 p-8 rounded-lg shadow-lg max-w-4xl mx-auto border-2 border-red-500">
-                <h2 className="text-2xl font-semibold mb-4 text-red-400">上位10位 - エリートプレイヤー</h2>
+                <h2 className="text-2xl font-semibold mb-4 text-red-400">上位20位 - エリートプレイヤー</h2>
                 <ul className="list-none">
                     {rankedData.slice(0, 20).map((rank) => (
                         <li

@@ -71,7 +71,7 @@ const Ranking: React.FC = () => {
 
             <h1 className="text-4xl font-bold mb-6 text-indigo-800">ランキング</h1>
             <div className="bg-white p-8 rounded-lg shadow-md max-w-4xl mx-auto">
-                <h2 className="text-2xl font-semibold mb-4 text-indigo-800">上位10位</h2>
+                <h2 className="text-2xl font-semibold mb-4 text-indigo-800">上位20位</h2>
                 <ul className="list-none">
                     {/* 上位10位のデータを表示 */}
                     {rankedData.slice(0, 20).map((rank) => (
