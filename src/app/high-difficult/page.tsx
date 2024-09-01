@@ -124,7 +124,7 @@ const Game: React.FC = () => {
     const correctAnswer = KoumeData[currentQuestion].lower; // 正解の答え
 
     if (isCorrect) {
-      const timeBonus = Math.floor(TOTAL_TIME - timeLeft); // 時間ボーナスを計算
+      const timeBonus = Math.floor(timeLeft); // 時間ボーナスを計算
       setScore(score + 10 + timeBonus); // スコアを更新
     }
 
