@@ -168,12 +168,17 @@ const Game: React.FC = () => {
 
   // スコアをNotionに保存する関数
   const saveScore = async () => {
-    if (!playerName || !selectedSchool) return;
+    if (!playerName) return;
 
     setIsSubmitting(true);
 
     try {
-      await axios.post('/api/saveScore', { name: playerName, school: selectedSchool, score });
+      await axios.post('/api/saveScore', { 
+        name: playerName, 
+        school: selectedSchool || '不明', 
+        score 
+        
+      });
       alert('スコアが保存されました！');
     } catch (error) {
       console.error('スコアの保存に失敗しました', error);
