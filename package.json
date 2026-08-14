@@ -12,7 +12,7 @@
     "@notionhq/client": "^2.2.15",
     "axios": "^1.7.5",
     "lucide-react": "^0.436.0",
-    "next": "14.2.7",
+    "next": "^14.2.32",
     "react": "^18",
     "react-dom": "^18",
     "switch": "^0.0.0"
